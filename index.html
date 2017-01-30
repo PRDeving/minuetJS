@@ -1,0 +1,11 @@
+<head>
+</head>
+<body>
+  <script src="minuet.js"></script>
+  <script>
+    minuet.http.ajax({
+      url: 'https://httpbin.org/get',
+      cache: false,
+    }).then(ans => console.info(ans));
+  </script>
+</body>
