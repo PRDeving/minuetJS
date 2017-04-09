@@ -7,5 +7,16 @@
       url: 'https://httpbin.org/get',
       cache: false,
     }).then(ans => console.info(ans));
+
+    minuet.define('test', function() {
+      return {a:1, b:2};
+    });
+    minuet.define('lol', function() {
+      return 'lolitas';
+    });
+
+    minuet.require(['test', 'lol'], function(ts, l) {
+      console.log('mainreq says', ts, l);
+    });
   </script>
 </body>

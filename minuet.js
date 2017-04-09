@@ -50,9 +50,31 @@
         oReq.send();
       });
     }
-
     this.ajax = ajax;
+  };
+
+  var _modules = {};
+  var define = function(name, cb) {
+    if (_modules[name])
+      throw new Error( 'Theres already a module defined as:', name);
+    _modules[name] = cb;
+  }
+
+  var _requireModule = function(n) {
+    if (!_modules[n])
+      throw new Error('Theres no said module:', n);
+    return _modules[n]();
+  }
+
+  var require = function(deps, fn) {
+    var cb = arguments.length > 1 ? arguments[arguments.length - 1] : false;
+    var d = [];
+    for (var i in deps)
+      d.push(_requireModule(deps[i]));
+    return cb ? cb.apply(this, d) : (d.length === 1 ? d[0] : d);
   }
 
   this.http = http;
+  this.define = define;
+  this.require = require;
 });
